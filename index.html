@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MémoVie Playground</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .playground-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .feature-demo {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .demo-button {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .memory-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .voice-recorder {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .photo-placeholder {
+            background: #ddd;
+            height: 150px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .text-size-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MémoVie Playground</h1>
+        <p>Testez les fonctionnalités de l'application</p>
+    </header>
+
+    <div class="container">
+        <div class="playground-section">
+            <h2>1. Créer un souvenir écrit</h2>
+            <div class="feature-demo">
+                <button class="demo-button" onclick="showMemoryCard()">Créer un nouveau souvenir</button>
+                <div id="memoryCard" class="memory-card">
+                    <h3>Mon souvenir du jour</h3>
+                    <textarea style="width: 100%; height: 100px; margin: 10px 0; padding: 10px;" 
+                              placeholder="Écrivez votre souvenir ici..."></textarea>
+                    <button class="demo-button" onclick="alert('Souvenir enregistré !')">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="playground-section">
+            <h2>2. Enregistrement vocal</h2>
+            <div class="feature-demo">
+                <div class="voice-recorder">
+                    <button class="demo-button" onclick="toggleRecording(this)">🎤 Commencer l'enregistrement</button>
+                    <span id="recordingStatus"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="playground-section">
+            <h2>3. Album photos</h2>
+            <div class="feature-demo">
+                <div class="photo-gallery">
+                    <div class="photo-placeholder">Photo 1</div>
+                    <div class="photo-placeholder">Photo 2</div>
+                    <div class="photo-placeholder">Photo 3</div>
+                    <div class="photo-placeholder">+ Ajouter</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="playground-section">
+            <h2>4. Partage familial</h2>
+            <div class="feature-demo">
+                <button class="demo-button" onclick="alert('Invitation envoyée à la famille !')">Inviter la famille</button>
+                <button class="demo-button" onclick="alert('Appel vidéo simulé')">📱 Appel vidéo</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-size-controls">
+        <button onclick="changeTextSize('increase')">A+</button>
+        <button onclick="changeTextSize('decrease')">A-</button>
+    </div>
+
+    <script>
+        function showMemoryCard() {
+            document.getElementById('memoryCard').style.display = 'block';
+        }
+
+        function toggleRecording(button) {
+            const status = document.getElementById('recordingStatus');
+            if (button.textContent.includes('Commencer')) {
+                button.textContent = '⏹️ Arrêter l\'enregistrement';
+                status.textContent = '🔴 Enregistrement en cours...';
+            } else {
+                button.textContent = '🎤 Commencer l\'enregistrement';
+                status.textContent = '';
+                alert('Enregistrement terminé !');
+            }
+        }
+
+        function changeTextSize(action) {
+            const body = document.body;
+            let currentSize = parseInt(window.getComputedStyle(body).fontSize);
+            if (action === 'increase' && currentSize < 20) {
+                body.style.fontSize = (currentSize + 2) + 'px';
+            } else if (action === 'decrease' && currentSize > 14) {
+                body.style.fontSize = (currentSize - 2) + 'px';
+            }
+        }
+    </script>
+</body>
+</html>
